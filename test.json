@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "name": "Ca Bung",
+  "ingredients": {
+    "ground pork": "300g",
+    "shallots/onions": "a few",
+    "chinese eggplants": "2",
+    "diced tomatos": "1 can",
+    "fried tofu": "1-2 packs"
+  },
+  "spices": ["bot nem", "tumeric", "fish sauce", "salt", "sugar"],
+  "instructions": [
+    "put oil in a pot on high heat",
+    "fry shallots/onions until they smell good - should only be a minute"
+  ],
+  "tags": ["dinner", "meat", "stew"]
+}
