@@ -14,3 +14,9 @@ You can seed the database using Prisma Studio:
 ```
 npx prisma studio
 ```
+
+# Launching Next.js App
+
+```
+npm run dev
+```

@@ -21,6 +21,6 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/index.js",
-    "pages/index.jsx"
+    "pages/index.tsx"
   ]
 }
