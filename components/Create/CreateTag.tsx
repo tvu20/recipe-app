@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 type Props = {
-  list: { name: string; quantity: string }[];
+  list: String[];
+  // list: { name: string; quantity: string }[];
   addItem: (item: any) => void;
   removeItem: (index: any) => void;
 };
@@ -14,7 +15,7 @@ const CreateTag: React.FC<Props> = (props) => {
     return list.map((item, i) => {
       return (
         <div key={i}>
-          <li>{item.name}</li>
+          <li>{item}</li>
           <button onClick={() => removeItem(i)}>Delete</button>
         </div>
       );
@@ -34,7 +35,7 @@ const CreateTag: React.FC<Props> = (props) => {
       <button
         type="button"
         onClick={() => {
-          addItem({ name: text });
+          addItem(text);
           setText("");
         }}
       >
