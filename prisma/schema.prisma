@@ -18,6 +18,7 @@ model Recipe {
   spices          String[]
   instructions    String[]
   tags            Tag[]
+  comments        Comment[]
   notes           String @default("")
   author          User?@relation(fields:[authorId], references:[id])
   authorId        String?
@@ -35,6 +36,16 @@ model Tag {
   id        Int  @id @default(autoincrement())
   name      String @unique
   recipes   Recipe[]
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  createdAt       DateTime @default(now())
+  message   String
+  author          User?@relation(fields:[authorId], references:[id])
+  authorId        String?
+  recipe    Recipe?   @relation(fields: [recipeId], references: [id])
+  recipeId  Int?
 }
 
 model Account {
@@ -65,6 +76,7 @@ model User {
   emailVerified DateTime?
   image         String?
   recipes       Recipe[]
+  comments      Comment[]
   accounts      Account[]
   sessions      Session[]
 }

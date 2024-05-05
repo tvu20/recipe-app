@@ -107,7 +107,7 @@ const Header: React.FC = () => {
     left = (
       <div className="left">
         <Link href="/">Feed</Link>
-        <Link href="/drafts">My drafts</Link>
+        <Link href="/mine">My recipes</Link>
         <style jsx>{`
           .bold {
             font-weight: bold;
@@ -135,7 +135,7 @@ const Header: React.FC = () => {
           {session.user.name} ({session.user.email})
         </p>
         <Link href="/create">
-          <button>New post</button>
+          <button>Create</button>
         </Link>
         <button onClick={() => signOut()}>
           <a>Log out</a>
