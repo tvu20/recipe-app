@@ -1,13 +1,12 @@
-import { getSession } from "next-auth/react";
 import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import prisma from "../../../lib/prisma";
 
-// POST /api/post
+// POST /api/recipe
 // Required fields in body: title
 // Optional fields in body: content
 export default async function handle(req, res) {
-  const { title, spices, ingredients, steps, tags } = req.body;
+  const { title, spices, ingredients, steps, tags, notes } = req.body;
 
   const session = await getServerSession(req, res, authOptions);
   console.log("session", session);
@@ -20,6 +19,7 @@ export default async function handle(req, res) {
       ingredients: {
         create: ingredients,
       },
+      notes: notes,
       tags: {
         connectOrCreate: tags.map((tag) => {
           return {

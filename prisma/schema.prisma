@@ -18,6 +18,7 @@ model Recipe {
   spices          String[]
   instructions    String[]
   tags            Tag[]
+  notes           String @default("")
   author          User?@relation(fields:[authorId], references:[id])
   authorId        String?
 }

@@ -18,7 +18,9 @@ const CreateIngredient: React.FC<Props> = (props) => {
           <li>
             {item.name}: {item.quantity}
           </li>
-          <button onClick={() => removeItem(i)}>Delete</button>
+          <button type="button" onClick={() => removeItem(i)}>
+            Delete
+          </button>
         </div>
       );
     });

@@ -16,7 +16,9 @@ const CreateTag: React.FC<Props> = (props) => {
       return (
         <div key={i}>
           <li>{item}</li>
-          <button onClick={() => removeItem(i)}>Delete</button>
+          <button type="button" onClick={() => removeItem(i)}>
+            Delete
+          </button>
         </div>
       );
     });
