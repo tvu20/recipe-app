@@ -27,13 +27,25 @@ const CreateList: React.FC<Props> = (props) => {
   return (
     <div>
       <ul>{displayList()}</ul>
-      <input
-        autoFocus
-        onChange={(e) => setText(e.target.value)}
-        placeholder={name}
-        type="text"
-        value={text}
-      />
+      {name !== "Step" && (
+        <input
+          autoFocus
+          onChange={(e) => setText(e.target.value)}
+          placeholder={name}
+          type="text"
+          value={text}
+        />
+      )}
+      {name === "Step" && (
+        <textarea
+          cols={50}
+          rows={8}
+          autoFocus
+          onChange={(e) => setText(e.target.value)}
+          placeholder={name}
+          value={text}
+        />
+      )}
       <button
         type="button"
         onClick={() => {

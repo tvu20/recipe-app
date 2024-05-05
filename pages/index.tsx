@@ -14,7 +14,7 @@ export const getStaticProps: GetStaticProps = async () => {
       tags: true,
     },
   });
-  return { props: { recipes: JSON.stringify(recipes) } };
+  return { props: { recipes: JSON.stringify(recipes) }, revalidate: 30 };
 };
 
 export default function Home({ recipes }) {
