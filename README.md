@@ -20,3 +20,7 @@ npx prisma studio
 ```
 npm run dev
 ```
+
+# Deploying to Vercel
+
+Merge into main branch.
