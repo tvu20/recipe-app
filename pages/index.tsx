@@ -1,32 +1,46 @@
-import prisma from "../lib/prisma";
+import { useEffect, useState } from "react";
 
-import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
 import Router from "next/router";
 
-// import Head from "next/head";
-// import styles from "../styles/Home.module.css";
+export default function Home() {
+  const [recipes, setRecipes] = useState([]);
+  const [tags, setTags] = useState([]);
 
-export const getStaticProps: GetStaticProps = async () => {
-  let recipes = await prisma.recipe.findMany({
-    include: {
-      ingredients: true,
-      tags: true,
-    },
-  });
-  let tags = await prisma.tag.findMany();
+  useEffect(() => {
+    fetch(`/api/recipes`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "access-control-allow-origin": "*",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        setRecipes(data);
+      })
+      .catch((error) => console.error(error));
 
-  return {
-    props: { recipes: JSON.stringify(recipes), tags: tags },
-    revalidate: 30,
-  };
-};
+    fetch(`/api/tags`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "access-control-allow-origin": "*",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        setTags(data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
-export default function Home({ recipes, tags }) {
   const renderRecipes = () => {
-    const parsed = JSON.parse(recipes);
-
-    return parsed.map((recipe) => {
+    return recipes.map((recipe) => {
       return (
         <div
           key={recipe.id}

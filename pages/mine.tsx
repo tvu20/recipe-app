@@ -1,38 +1,61 @@
-import React from "react";
-import { GetServerSideProps } from "next";
-import { useSession, getSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import Router from "next/router";
-import prisma from "../lib/prisma";
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getSession({ req });
-  if (!session) {
-    res.statusCode = 403;
-    return { props: { drafts: [] } };
-  }
+// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+//   const session = await getSession({ req });
+//   if (!session) {
+//     res.statusCode = 403;
+//     return { props: { drafts: [] } };
+//   }
 
-  const recipes = await prisma.recipe.findMany({
-    where: {
-      author: { email: session.user.email },
-    },
-    include: {
-      author: {
-        select: { name: true },
+//   const recipes = await prisma.recipe.findMany({
+//     where: {
+//       author: { email: session.user.email },
+//     },
+//     include: {
+//       author: {
+//         select: { name: true },
+//       },
+//     },
+//   });
+//   return {
+//     props: { recipes: JSON.parse(JSON.stringify(recipes)) },
+//   };
+// };
+
+// type Props = {
+//   recipes: any;
+// };
+
+const Mine: React.FC = () => {
+  const { data: session, status } = useSession();
+
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    if (status === "loading") return;
+    const userHasValidSession = Boolean(session);
+    if (!userHasValidSession) {
+      Router.push("/");
+    }
+
+    fetch(`/api/recipes/mine`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "access-control-allow-origin": "*",
+        "Content-Type": "application/json",
       },
-    },
-  });
-  return {
-    props: { recipes: JSON.parse(JSON.stringify(recipes)) },
-  };
-};
-
-type Props = {
-  recipes: any;
-};
-
-const Mine: React.FC<Props> = ({ recipes }) => {
-  const { data: session } = useSession();
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setRecipes(data);
+      })
+      .catch((error) => console.error(error));
+  }, [session]);
 
   if (!session) {
     return (
