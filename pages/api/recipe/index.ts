@@ -9,7 +9,7 @@ export default async function handle(req, res) {
   const { title, spices, ingredients, steps, tags, notes } = req.body;
 
   const session = await getServerSession(req, res, authOptions);
-  console.log("session", session);
+  // console.log("session", session);
   const result = await prisma.recipe.create({
     data: {
       title: title,

@@ -14,10 +14,15 @@ export const getStaticProps: GetStaticProps = async () => {
       tags: true,
     },
   });
-  return { props: { recipes: JSON.stringify(recipes) }, revalidate: 30 };
+  let tags = await prisma.tag.findMany();
+
+  return {
+    props: { recipes: JSON.stringify(recipes), tags: tags },
+    revalidate: 30,
+  };
 };
 
-export default function Home({ recipes }) {
+export default function Home({ recipes, tags }) {
   const renderRecipes = () => {
     const parsed = JSON.parse(recipes);
 
