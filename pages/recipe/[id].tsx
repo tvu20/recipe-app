@@ -54,8 +54,6 @@ const Recipe = ({ recipe }) => {
     return <div>Loading...</div>;
   }
 
-  console.log(recipe);
-
   const userHasValidSession = Boolean(session);
   const postBelongsToUser = session?.user?.email === recipe.author?.email;
 
@@ -86,9 +84,45 @@ const Recipe = ({ recipe }) => {
       return (
         <div key={i}>
           <p>{c.message}</p>
+          <button type="button" onClick={(e) => deleteComment(e, c.id)}>
+            Delete
+          </button>
         </div>
       );
     });
+  };
+
+  const submitComment = async (e: React.SyntheticEvent) => {
+    console.log("submitting comment");
+    e.preventDefault();
+    try {
+      const body = { comment, id: recipe.id };
+      await fetch("/api/comment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      setComment("");
+      Router.replace(Router.asPath);
+
+      // await Router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteComment = async (e: React.SyntheticEvent, id: string) => {
+    console.log("deleting comment");
+    e.preventDefault();
+
+    try {
+      await fetch(`/api/comment/${id}`, {
+        method: "DELETE",
+      });
+      await Router.replace(Router.asPath);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -123,7 +157,9 @@ const Recipe = ({ recipe }) => {
               placeholder="Add a comment"
               value={comment}
             />
-            <button type="button">Add comment</button>
+            <button type="button" onClick={submitComment}>
+              Add comment
+            </button>
             {displayComments()}
           </>
         )}
