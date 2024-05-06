@@ -43,12 +43,16 @@ const Mine: React.FC<Props> = ({ recipes }) => {
     );
   }
 
+  if (!recipes) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Layout>
       <div className="page">
         <h1>My Recipes</h1>
         <main>
-          {recipes.map((recipe) => (
+          {recipes?.map((recipe) => (
             <div
               key={recipe.id}
               className="post"
