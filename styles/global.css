@@ -2,19 +2,13 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    Fira Sans,
-    Droid Sans,
-    Helvetica Neue,
-    sans-serif;
+}
+
+body {
+  --main-color: #f6bd60;
+  --serif-font: "Inria Serif", serif;
+  --sans-font: "Istok Web", sans-serif;
+  --display-font: "Kaushan Script", cursive;
 }
 
 a {

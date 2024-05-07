@@ -1,0 +1,16 @@
+.btn {
+  background-color: var(--main-color);
+  font-family: var(--sans-font);
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 18px;
+  box-sizing: border-box;
+  border: none;
+  color: white;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: white;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import Layout from "../components/Layout";
 import Router from "next/router";
+import Tag from "../components/Tags/Tag";
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -52,5 +53,16 @@ export default function Home() {
     });
   };
 
-  return <Layout>{renderRecipes()}</Layout>;
+  const renderTags = () => {
+    return tags.map((t) => {
+      return <Tag name={t.name}></Tag>;
+    });
+  };
+
+  return (
+    <Layout>
+      {renderRecipes()}
+      {renderTags()}
+    </Layout>
+  );
 }
