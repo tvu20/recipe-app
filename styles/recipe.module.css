@@ -1,0 +1,38 @@
+.container {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 var(--global-padding);
+  column-count: 3;
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
+  -moz-column-gap: 10px;
+  -webkit-column-gap: 10px;
+  column-gap: 20px;
+}
+
+.card {
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  border-radius: 15px;
+  width: 100%;
+  margin: 10px 0;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 30px 28px;
+}
+
+.card h2 {
+  font-size: 24px;
+  margin: 0 0 5px;
+}
+
+.card:hover {
+  box-sizing: border-box;
+  outline: 2px solid var(--main-color);
+}
+
+.tagContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}

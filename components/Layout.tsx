@@ -9,6 +9,7 @@ const Layout: React.FC<Props> = (props) => (
   <div>
     <Header />
     <div className="layout">{props.children}</div>
+    <div style={{ height: "100px" }}></div>
   </div>
 );
 

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 
 import Layout from "../components/Layout";
-import Router from "next/router";
 import Tag from "../components/Tags/Tag";
 
+import styles from "../styles/home.module.css";
+import Input from "../components/Input/Input";
+import RecipeGrid from "../components/Recipes/RecipeGrid";
+
 export default function Home() {
+  const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [tags, setTags] = useState([]);
 
@@ -19,7 +23,7 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         setRecipes(data);
       })
       .catch((error) => console.error(error));
@@ -40,19 +44,6 @@ export default function Home() {
       .catch((error) => console.error(error));
   }, []);
 
-  const renderRecipes = () => {
-    return recipes.map((recipe) => {
-      return (
-        <div
-          key={recipe.id}
-          onClick={() => Router.push("/recipe/[id]", `/recipe/${recipe.id}`)}
-        >
-          {recipe.title}
-        </div>
-      );
-    });
-  };
-
   const renderTags = () => {
     return tags.map((t) => {
       return <Tag name={t.name}></Tag>;
@@ -61,8 +52,32 @@ export default function Home() {
 
   return (
     <Layout>
-      {renderRecipes()}
-      {renderTags()}
+      <div className={styles.header}>
+        <h1>
+          My <span className={styles.special}>Recipe</span> App
+        </h1>
+      </div>
+      <div className={styles.searchBar}>
+        <Input
+          search
+          onChange={setSearch}
+          value={search}
+          placeholder="Search for a recipe"
+        ></Input>
+        <div className={styles.tagsContainer}>{renderTags()}</div>
+      </div>
+      <RecipeGrid recipes={recipes} />
+      {/* <Input
+        onChange={setSearch}
+        value={search}
+        placeholder="Search for a recipe"
+      />
+      <Input
+        small
+        onChange={setSearch}
+        value={search}
+        placeholder="Search for a recipe"
+      /> */}
     </Layout>
   );
 }

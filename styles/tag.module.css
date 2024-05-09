@@ -1,16 +1,33 @@
 .btn {
-  background-color: var(--main-color);
+  background-color: white;
   font-family: var(--sans-font);
   font-size: 14px;
-  padding: 8px 12px;
-  border-radius: 18px;
+  padding: 5px 12px;
+  border-radius: 15px;
   box-sizing: border-box;
   border: none;
-  color: white;
-  margin: 0 5px;
+  color: var(--main-color);
+  margin: 5px 10px 5px 0;
   cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  border: 2px solid var(--main-color);
+}
+
+.btn p {
+  margin: 0;
 }
 
 .selected {
-  background-color: white;
+  background-color: var(--main-color);
+  color: white;
+}
+
+.icon {
+  font-size: 20px;
+  margin-right: 3px;
+}
+
+.disabled {
+  cursor: auto;
 }
