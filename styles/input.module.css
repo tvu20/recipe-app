@@ -24,3 +24,44 @@
   font-size: 20px;
   padding: 5px 0;
 }
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  width: 32vw;
+  min-width: 300px;
+  align-items: center;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.deleteBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.deleteIcon {
+  font-size: 30px;
+}
+
+@media (max-width: 800px) {
+}
+
+@media (max-width: 500px) {
+  .input {
+    font-size: 20px;
+  }
+
+  input.input.small {
+    max-width: 30vw;
+  }
+
+  input.search {
+    max-width: initial;
+  }
+
+  .small {
+    font-size: 16px;
+  }
+}

@@ -36,3 +36,51 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.comment {
+  background-color: var(--secondary-color);
+  border-radius: 15px;
+  width: 100%;
+  margin: 10px 0;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 30px 28px;
+  font-size: 14px;
+}
+
+.commentDelete {
+  cursor: pointer;
+  color: var(--delete-color);
+  font-family: var(--sans-font);
+  background-color: transparent;
+  border: none;
+  padding: 0px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .container {
+    column-count: 2;
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-gap: 10px;
+    -webkit-column-gap: 10px;
+    column-gap: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    column-count: 1;
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    -moz-column-gap: 10px;
+    -webkit-column-gap: 10px;
+    column-gap: 20px;
+  }
+
+  .card h2 {
+    font-size: 20px;
+  }
+}

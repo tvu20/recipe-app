@@ -10,7 +10,6 @@ export default async function handle(req, res) {
   if (!session) {
     res.status(403);
   } else {
-    // console.log("session", session);
     const result = await prisma.recipe.findMany({
       where: {
         author: { email: session.user.email },
@@ -19,6 +18,7 @@ export default async function handle(req, res) {
         author: {
           select: { name: true },
         },
+        tags: true,
       },
     });
     res.status(200).json(result);

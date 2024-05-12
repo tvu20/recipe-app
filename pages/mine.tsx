@@ -3,31 +3,9 @@ import { useSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import Router from "next/router";
 
-// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-//   const session = await getSession({ req });
-//   if (!session) {
-//     res.statusCode = 403;
-//     return { props: { drafts: [] } };
-//   }
+import RecipeGrid from "../components/Recipes/RecipeGrid";
 
-//   const recipes = await prisma.recipe.findMany({
-//     where: {
-//       author: { email: session.user.email },
-//     },
-//     include: {
-//       author: {
-//         select: { name: true },
-//       },
-//     },
-//   });
-//   return {
-//     props: { recipes: JSON.parse(JSON.stringify(recipes)) },
-//   };
-// };
-
-// type Props = {
-//   recipes: any;
-// };
+import styles from "../styles/home.module.css";
 
 const Mine: React.FC = () => {
   const { data: session, status } = useSession();
@@ -60,7 +38,11 @@ const Mine: React.FC = () => {
   if (!session) {
     return (
       <Layout>
-        <h1>My Recipes</h1>
+        <div className={styles.header}>
+          <h1>
+            My <span className={styles.special}>Recipe</span> App
+          </h1>
+        </div>
         <div>You need to be authenticated to view this page.</div>
       </Layout>
     );
@@ -72,7 +54,12 @@ const Mine: React.FC = () => {
 
   return (
     <Layout>
-      <div className="page">
+      <div className={styles.headerAlt}>
+        <h1>My Recipes</h1>
+      </div>
+      <RecipeGrid recipes={recipes} />
+
+      {/* <div className="page">
         <h1>My Recipes</h1>
         <main>
           {recipes?.map((recipe) => (
@@ -87,21 +74,7 @@ const Mine: React.FC = () => {
             </div>
           ))}
         </main>
-      </div>
-      <style jsx>{`
-        .post {
-          background: var(--geist-background);
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
+      </div> */}
     </Layout>
   );
 };

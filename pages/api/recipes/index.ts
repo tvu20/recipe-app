@@ -6,7 +6,6 @@ import prisma from "../../../lib/prisma";
 export default async function handle(req, res) {
   let recipes = await prisma.recipe.findMany({
     include: {
-      // ingredients: true,
       tags: true,
     },
   });

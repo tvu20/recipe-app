@@ -8,39 +8,30 @@ type Props = {
   placeholder: string;
   search?: boolean;
   small?: boolean;
-  autoFocus?: boolean;
   width?: string;
-  marginLeft?: string;
 };
 
-const Input: React.FC<Props> = ({
+const TextArea: React.FC<Props> = ({
   value,
   onChange,
   placeholder,
-  search,
   small,
-  autoFocus,
   width,
-  marginLeft,
 }) => {
   return (
     <>
-      <input
-        autoFocus={autoFocus}
-        className={`${styles.input} ${search ? styles.search : ""} ${
-          small ? styles.small : ""
-        }`}
-        style={{
-          width: width ? width : "",
-          marginLeft: marginLeft ? marginLeft : "",
-        }}
+      <textarea
+        style={{ width: width ? width : "" }}
+        className={`${styles.input} ${small ? styles.small : ""}`}
+        cols={50}
+        rows={5}
+        autoFocus
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        type="text"
         value={value}
       />
     </>
   );
 };
 
-export default Input;
+export default TextArea;

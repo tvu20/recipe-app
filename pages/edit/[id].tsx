@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Router from "next/router";
 import prisma from "../../lib/prisma";
-
 import { useSession } from "next-auth/react";
 
 import Layout from "../../components/Layout";
 import CreateList from "../../components/Create/CreateList";
 import CreateIngredient from "../../components/Create/CreateIngredient";
 import CreateTag from "../../components/Create/CreateTag";
+import Input from "../../components/Input/Input";
+import TextArea from "../../components/Input/TextArea";
+
+import styles from "../../styles/home.module.css";
 
 type Props = {
   recipe: any;
@@ -76,8 +79,6 @@ const Edit: React.FC<Props> = ({ recipe, id }) => {
     setTags(ts);
   }, [session, status, recipe]);
 
-  //   useEffect(() => {}, [recipe]);
-
   const addSpice = (item) => {
     setSpices((prevState) => [...prevState, item]);
   };
@@ -106,8 +107,8 @@ const Edit: React.FC<Props> = ({ recipe, id }) => {
     setTags((prevState) => [...prevState, item]);
   };
 
-  const removeTag = (index) => {
-    setTags((prevState) => prevState.filter((_, i) => i !== index));
+  const removeTag = (item) => {
+    setTags((prevState) => prevState.filter((t) => t !== item));
   };
 
   const submitData = async (e: React.SyntheticEvent) => {
@@ -121,52 +122,61 @@ const Edit: React.FC<Props> = ({ recipe, id }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      await Router.push("/");
+      await Router.push("/recipe/[id]", `/recipe/${recipe.id}`);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const deleteData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    console.log("delete");
-    try {
-      await fetch(`/api/recipe/${id}`, {
-        method: "DELETE",
-      });
-      await Router.push("/");
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const deleteData = async (e: React.SyntheticEvent) => {
+  //   e.preventDefault();
+  //   console.log("delete");
+  //   try {
+  //     await fetch(`/api/recipe/${id}`, {
+  //       method: "DELETE",
+  //     });
+  //     await Router.push("/");
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <Layout>
-      <div>
+      <div className={styles.formContainer}>
         <form onSubmit={submitData}>
           <h1>Edit Recipe</h1>
 
-          <input
+          <h3>Name of Dish</h3>
+          <Input
             autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
-            type="text"
             value={title}
+            onChange={setTitle}
+            placeholder="Carrot Cake"
+            width="70vw"
           />
 
+          <div className={styles.spacer}></div>
+
+          <h3>Ingredients</h3>
           <CreateIngredient
             list={ingredients}
             addItem={addIngredient}
             removeItem={removeIngredient}
           />
+          <div className={styles.spacer}></div>
 
+          <h3>Seasonings</h3>
           <CreateList
-            name="Spices"
+            name="Name"
             list={spices}
             addItem={addSpice}
             removeItem={removeSpice}
           />
 
+          <div className={styles.spacer}></div>
+
+          <h3>Instructions</h3>
           <CreateList
             name="Step"
             list={steps}
@@ -174,53 +184,39 @@ const Edit: React.FC<Props> = ({ recipe, id }) => {
             removeItem={removeStep}
           />
 
-          <textarea
-            cols={50}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Notes"
-            rows={8}
+          <div className={styles.spacer}></div>
+
+          <h3 style={{ marginBottom: "10px" }}>Notes</h3>
+          <TextArea
+            onChange={setNotes}
+            placeholder="Additional information"
             value={notes}
+            small
+            width="70vw"
           />
+
+          <div className={styles.spacer}></div>
+
+          <h3 style={{ marginBottom: "5px" }}>Tags</h3>
+          <p style={{ margin: "0 0 10px" }}>Select all that apply.</p>
 
           <CreateTag list={tags} addItem={addTag} removeItem={removeTag} />
 
-          <input disabled={!title} type="submit" value="Save" />
-          <button type="button" onClick={deleteData}>
-            Delete
+          <input
+            disabled={!title}
+            type="submit"
+            value="Save"
+            className={styles.submitButton}
+          />
+          <button
+            className={styles.cancel2Button}
+            type="button"
+            onClick={() => Router.push("/recipe/[id]", `/recipe/${recipe.id}`)}
+          >
+            Cancel
           </button>
-          <a className="back" href="#" onClick={() => Router.push("/")}>
-            or Cancel
-          </a>
         </form>
       </div>
-      <style jsx>{`
-        .page {
-          background: var(--geist-background);
-          padding: 3rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        input[type="text"],
-        textarea {
-          width: 100%;
-          padding: 0.5rem;
-          margin: 0.5rem 0;
-          border-radius: 0.25rem;
-          border: 0.125rem solid rgba(0, 0, 0, 0.2);
-        }
-
-        input[type="submit"] {
-          background: #ececec;
-          border: 0;
-          padding: 1rem 2rem;
-        }
-
-        .back {
-          margin-left: 1rem;
-        }
-      `}</style>
     </Layout>
   );
 };

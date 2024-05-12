@@ -1,33 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
+
+import Tag from "../Tags/Tag";
+
+import { TAGS } from "../../utils/tags";
+
+import styles from "../../styles/tag.module.css";
 
 type Props = {
   list: String[];
-  // list: { name: string; quantity: string }[];
   addItem: (item: any) => void;
   removeItem: (index: any) => void;
 };
 
 const CreateTag: React.FC<Props> = (props) => {
   const { list, addItem, removeItem } = props;
-  const [text, setText] = useState("");
+
+  console.log(list);
 
   const displayList = () => {
-    return list.map((item, i) => {
+    return TAGS.map((item, i) => {
       return (
-        <div key={i}>
-          <li>{item}</li>
-          <button type="button" onClick={() => removeItem(i)}>
-            Delete
-          </button>
-        </div>
+        <Tag
+          name={item}
+          key={i}
+          addItem={addItem}
+          removeItem={removeItem}
+          includes={list.includes(item)}
+        />
       );
     });
   };
 
   return (
     <div>
-      <ul>{displayList()}</ul>
-      <input
+      <div className={styles.tagContainer}>{displayList()}</div>
+      {/* <input
         autoFocus
         onChange={(e) => setText(e.target.value)}
         placeholder="Tag"
@@ -42,7 +49,7 @@ const CreateTag: React.FC<Props> = (props) => {
         }}
       >
         Enter
-      </button>
+      </button> */}
     </div>
   );
 };

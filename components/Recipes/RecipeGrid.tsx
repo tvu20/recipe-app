@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Router from "next/router";
+import React from "react";
 
 import RecipeCard from "./RecipeCard";
 
@@ -12,7 +11,7 @@ type Props = {
 const RecipeGrid: React.FC<Props> = ({ recipes }) => {
   const renderRecipes = () => {
     return recipes.map((recipe) => {
-      return <RecipeCard recipe={recipe}></RecipeCard>;
+      return <RecipeCard key={recipe.id} recipe={recipe}></RecipeCard>;
     });
   };
 

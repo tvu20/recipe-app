@@ -2,16 +2,18 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: var(--sans-font);
 }
 
 body {
   --main-color: #f6bd60;
   --secondary-color: #f7eee0;
+  --delete-color: #f66960;
   --serif-font: "Inria Serif", serif;
   --sans-font: "Istok Web", sans-serif;
   --display-font: "Kaushan Script", cursive;
   --global-padding: 40px;
+
+  font-family: var(--sans-font);
 }
 
 a {
@@ -33,4 +35,49 @@ h1 {
   font-family: var(--serif-font);
   font-size: 50px;
   font-weight: 400;
+}
+
+h3 {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 15px 0;
+}
+
+h4 {
+  font-family: var(--serif-font);
+  font-weight: 600;
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+ul {
+  margin: 5px 0 8px;
+}
+
+.add-btn {
+  background-color: var(--main-color);
+  border: none;
+  padding: 8px 18px;
+  font-size: 18px;
+  color: white;
+  margin-left: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  h4 {
+    font-size: 28px;
+  }
+
+  .add-btn {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 500px) {
+  body {
+    --global-padding: 30px;
+  }
 }

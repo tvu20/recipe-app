@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Router from "next/router";
 
 import Tag from "../Tags/Tag";
@@ -12,7 +12,11 @@ type Props = {
 const RecipeCard: React.FC<Props> = ({ recipe }) => {
   const renderTags = () => {
     return recipe?.tags.map((t) => {
-      return <Tag name={t.name} disabled></Tag>;
+      if (typeof t === "string") {
+        return <Tag key={t} name={t} disabled filled></Tag>;
+      }
+
+      return <Tag key={t.name} name={t.name} disabled filled></Tag>;
     });
   };
 

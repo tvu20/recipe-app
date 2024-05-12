@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import prisma from "../../lib/prisma";
-
+import { Icon } from "@iconify/react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
-
 import { useSession } from "next-auth/react";
-import Layout from "../../components/Layout";
 import Router from "next/router";
+
+import useMediaQuery from "../../utils/useMediaQuery";
+
+import Tag from "../../components/Tags/Tag";
+import Layout from "../../components/Layout";
+import CommentCard from "../../components/Comment/Comment";
+import TextArea from "../../components/Input/TextArea";
+
+import styles from "../../styles/home.module.css";
 
 export const getServerSideProps = async (ctx) => {
   const { params } = ctx;
@@ -44,6 +51,9 @@ export const getServerSideProps = async (ctx) => {
 
 const Recipe = ({ recipe }) => {
   const [comment, setComment] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const isBreakpoint = useMediaQuery(800);
 
   const { data: session, status } = useSession();
   if (status === "loading") {
@@ -56,6 +66,12 @@ const Recipe = ({ recipe }) => {
 
   const userHasValidSession = Boolean(session);
   const postBelongsToUser = session?.user?.email === recipe.author?.email;
+
+  const displayTags = () => {
+    return recipe?.tags.map((t) => {
+      return <Tag key={t.name} name={t.name} disabled></Tag>;
+    });
+  };
 
   const displayIngredients = () => {
     return recipe?.ingredients.map((item, i) => {
@@ -79,16 +95,13 @@ const Recipe = ({ recipe }) => {
     });
   };
 
+  const displayModal = () => {
+    setShowModal((prevState) => !prevState);
+  };
+
   const displayComments = () => {
     return recipe?.comments.map((c, i) => {
-      return (
-        <div key={i}>
-          <p>{c.message}</p>
-          <button type="button" onClick={(e) => deleteComment(e, c.id)}>
-            Delete
-          </button>
-        </div>
-      );
+      return <CommentCard key={i} comment={c} deleteComment={deleteComment} />;
     });
   };
 
@@ -104,8 +117,6 @@ const Recipe = ({ recipe }) => {
       });
       setComment("");
       Router.replace(Router.asPath);
-
-      // await Router.push("/");
     } catch (error) {
       console.error(error);
     }
@@ -125,41 +136,115 @@ const Recipe = ({ recipe }) => {
     }
   };
 
+  const deleteRecipe = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log("delete");
+    try {
+      await fetch(`/api/recipe/${recipe.id}`, {
+        method: "DELETE",
+      });
+      await Router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const renderModal = () => {
+    return (
+      <div className={styles.modalBg}>
+        <div className={styles.modal}>
+          <p>Are you sure you want to permanently delete this recipe?</p>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <button
+              onClick={deleteRecipe}
+              className={`${styles.delete2Button} ${styles.modalBtn}`}
+            >
+              Delete
+            </button>
+            <button
+              onClick={displayModal}
+              className={`${styles.cancelButton} ${styles.modalBtn}`}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Layout>
-      <div>
-        <h1>{recipe?.title}</h1>
-        {userHasValidSession && postBelongsToUser && (
-          <button
-            onClick={() => Router.push("/edit/[id]", `/edit/${recipe.id}`)}
-          >
-            Edit
-          </button>
-        )}
-        <h2>Ingredients</h2>
+      {showModal && renderModal()}
+
+      <div className={styles.headerAlt}>
+        <div className={styles.recipeTitle}>
+          <h1>{recipe?.title}</h1>
+          {userHasValidSession && postBelongsToUser && (
+            <div>
+              <button
+                onClick={() => Router.push("/edit/[id]", `/edit/${recipe.id}`)}
+                className={styles.editButton}
+              >
+                {isBreakpoint ? (
+                  <Icon icon="iconamoon:edit" className={styles.icon} />
+                ) : (
+                  "Edit"
+                )}
+              </button>
+              <button onClick={displayModal} className={styles.deleteButton}>
+                {isBreakpoint ? (
+                  <Icon
+                    icon="material-symbols:delete-outline"
+                    className={styles.icon}
+                  />
+                ) : (
+                  "Delete"
+                )}
+              </button>
+            </div>
+          )}
+        </div>
+        <div className={styles.tagContainer}>{displayTags()}</div>
+      </div>
+
+      <div className={styles.content}>
+        <h3>Ingredients</h3>
         <ul>{displayIngredients()}</ul>
         <h3>Seasonings</h3>
         <ul>{displaySpices()}</ul>
-        <h2>Instructions</h2>
+        <h3>Instructions</h3>
 
         <ol>{displaySteps()}</ol>
         <h3>Notes</h3>
-        <p>{recipe?.notes}</p>
+        <p style={{ whiteSpace: "pre-wrap" }}>{recipe?.notes}</p>
 
         {userHasValidSession && (
           <>
-            <h2>Comments</h2>
-            <textarea
-              cols={50}
-              rows={8}
-              autoFocus
-              onChange={(e) => setComment(e.target.value)}
-              placeholder="Add a comment"
-              value={comment}
-            />
-            <button type="button" onClick={submitComment}>
-              Add comment
-            </button>
+            <h4>Comments</h4>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                marginBottom: "30px",
+              }}
+            >
+              <TextArea
+                width="100%"
+                value={comment}
+                onChange={setComment}
+                placeholder="Add a comment"
+                small
+              />
+              <button
+                className="add-btn"
+                type="button"
+                onClick={submitComment}
+                disabled={!comment}
+              >
+                Add
+              </button>
+            </div>
             {displayComments()}
           </>
         )}
