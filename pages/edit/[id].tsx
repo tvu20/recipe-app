@@ -10,7 +10,7 @@ import CreateTag from "../../components/Create/CreateTag";
 import Input from "../../components/Input/Input";
 import TextArea from "../../components/Input/TextArea";
 
-import styles from "../../styles/home.module.css";
+import styles from "../../styles/Home.module.css";
 
 type Props = {
   recipe: any;

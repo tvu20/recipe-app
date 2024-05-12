@@ -3,7 +3,7 @@ import Router from "next/router";
 
 import Tag from "../Tags/Tag";
 
-import styles from "../../styles/recipe.module.css";
+import styles from "../../styles/Recipe.module.css";
 
 type Props = {
   recipe: any;

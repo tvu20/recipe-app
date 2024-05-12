@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 
-import styles from "../../styles/tag.module.css";
+import styles from "../../styles/Tag.module.css";
 import { TAG_ICONS } from "../../utils/tags";
 
 type Props = {

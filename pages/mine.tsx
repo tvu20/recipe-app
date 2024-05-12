@@ -5,7 +5,7 @@ import Router from "next/router";
 
 import RecipeGrid from "../components/Recipes/RecipeGrid";
 
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 
 const Mine: React.FC = () => {
   const { data: session, status } = useSession();

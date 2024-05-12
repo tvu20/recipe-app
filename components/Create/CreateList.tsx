@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import Input from "../Input/Input";
 import TextArea from "../Input/TextArea";
 
-import styles from "../../styles/input.module.css";
+import styles from "../../styles/Input.module.css";
 
 type Props = {
   name: string;

@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 
 import useMediaQuery from "../utils/useMediaQuery";
 
-import styles from "../styles/header.module.css";
+import styles from "../styles/Header.module.css";
 
 const Header: React.FC = () => {
   const router = useRouter();

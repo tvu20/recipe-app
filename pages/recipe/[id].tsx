@@ -13,7 +13,7 @@ import Layout from "../../components/Layout";
 import CommentCard from "../../components/Comment/Comment";
 import TextArea from "../../components/Input/TextArea";
 
-import styles from "../../styles/home.module.css";
+import styles from "../../styles/Home.module.css";
 
 export const getServerSideProps = async (ctx) => {
   const { params } = ctx;

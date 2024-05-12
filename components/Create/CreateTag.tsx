@@ -4,7 +4,7 @@ import Tag from "../Tags/Tag";
 
 import { TAGS } from "../../utils/tags";
 
-import styles from "../../styles/tag.module.css";
+import styles from "../../styles/Tag.module.css";
 
 type Props = {
   list: String[];

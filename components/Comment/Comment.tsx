@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import styles from "../../styles/recipe.module.css";
+import styles from "../../styles/Recipe.module.css";
 
 type Props = {
   comment: any;

@@ -5,7 +5,7 @@ import Tag from "../components/Tags/Tag";
 import Input from "../components/Input/Input";
 import RecipeGrid from "../components/Recipes/RecipeGrid";
 
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const [search, setSearch] = useState("");

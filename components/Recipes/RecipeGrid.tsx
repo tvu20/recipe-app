@@ -2,7 +2,7 @@ import React from "react";
 
 import RecipeCard from "./RecipeCard";
 
-import styles from "../../styles/recipe.module.css";
+import styles from "../../styles/Recipe.module.css";
 
 type Props = {
   recipes: any;

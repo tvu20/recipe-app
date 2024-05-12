@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 import Input from "../Input/Input";
 
-import styles from "../../styles/input.module.css";
+import styles from "../../styles/Input.module.css";
 
 type Props = {
   list: { name: string; quantity: string }[];
