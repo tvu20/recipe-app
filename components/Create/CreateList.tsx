@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import { Icon } from "@iconify/react";
+
+import Input from "../Input/Input";
+import TextArea from "../Input/TextArea";
+
+import styles from "../../styles/Input.module.css";
 
 type Props = {
   name: string;
@@ -14,10 +20,31 @@ const CreateList: React.FC<Props> = (props) => {
   const displayList = () => {
     return list.map((item, i) => {
       return (
-        <div key={i}>
+        <div key={i} className={styles.listItem}>
           <li>{item}</li>
-          <button type="button" onClick={() => removeItem(i)}>
-            Delete
+          <button
+            className={styles.deleteBtn}
+            type="button"
+            onClick={() => removeItem(i)}
+          >
+            <Icon className={styles.deleteIcon} icon="basil:cross-solid" />
+          </button>
+        </div>
+      );
+    });
+  };
+
+  const displaySteps = () => {
+    return list.map((item, i) => {
+      return (
+        <div key={i} className={styles.listItem} style={{ width: "70vw" }}>
+          <li>{item}</li>
+          <button
+            className={styles.deleteBtn}
+            type="button"
+            onClick={() => removeItem(i)}
+          >
+            <Icon className={styles.deleteIcon} icon="basil:cross-solid" />
           </button>
         </div>
       );
@@ -26,35 +53,44 @@ const CreateList: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <ul>{displayList()}</ul>
-      {name !== "Step" && (
-        <input
-          autoFocus
-          onChange={(e) => setText(e.target.value)}
-          placeholder={name}
-          type="text"
-          value={text}
-        />
-      )}
-      {name === "Step" && (
-        <textarea
-          cols={50}
-          rows={8}
-          autoFocus
-          onChange={(e) => setText(e.target.value)}
-          placeholder={name}
-          value={text}
-        />
-      )}
-      <button
-        type="button"
-        onClick={() => {
-          addItem(text);
-          setText("");
+      {name !== "Step" && <ul>{displayList()}</ul>}
+      {name === "Step" && <ol>{displaySteps()}</ol>}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "flex-end",
         }}
       >
-        Enter
-      </button>
+        {name !== "Step" && (
+          <Input
+            autoFocus
+            onChange={setText}
+            placeholder={name}
+            value={text}
+            small
+          />
+        )}
+        {name === "Step" && (
+          <TextArea
+            onChange={setText}
+            placeholder="Describe a step of the recipe"
+            value={text}
+            small
+            width="70vw"
+          />
+        )}
+        <button
+          className="add-btn"
+          type="button"
+          onClick={() => {
+            addItem(text);
+            setText("");
+          }}
+        >
+          Add
+        </button>
+      </div>
     </div>
   );
 };

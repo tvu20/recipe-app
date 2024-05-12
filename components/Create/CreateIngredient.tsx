@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import { Icon } from "@iconify/react";
+
+import Input from "../Input/Input";
+
+import styles from "../../styles/Input.module.css";
 
 type Props = {
   list: { name: string; quantity: string }[];
@@ -14,12 +19,16 @@ const CreateIngredient: React.FC<Props> = (props) => {
   const displayList = () => {
     return list.map((item, i) => {
       return (
-        <div key={i}>
+        <div key={i} className={styles.listItem}>
           <li>
             {item.name}: {item.quantity}
           </li>
-          <button type="button" onClick={() => removeItem(i)}>
-            Delete
+          <button
+            className={styles.deleteBtn}
+            type="button"
+            onClick={() => removeItem(i)}
+          >
+            <Icon className={styles.deleteIcon} icon="basil:cross-solid" />
           </button>
         </div>
       );
@@ -29,21 +38,24 @@ const CreateIngredient: React.FC<Props> = (props) => {
   return (
     <div>
       <ul>{displayList()}</ul>
-      <input
+      <Input
         autoFocus
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Ingredient name"
-        type="text"
+        onChange={setText}
+        placeholder="Name"
         value={text}
+        small
+        width="200px"
       />
-      <input
-        autoFocus
-        onChange={(e) => setQty(e.target.value)}
+      <Input
+        marginLeft="15px"
+        onChange={setQty}
         placeholder="Quantity"
-        type="text"
         value={qty}
+        small
+        width="100px"
       />
       <button
+        className="add-btn"
         type="button"
         onClick={() => {
           addItem({ name: text, quantity: qty });
@@ -51,7 +63,7 @@ const CreateIngredient: React.FC<Props> = (props) => {
           setQty("");
         }}
       >
-        Enter
+        Add
       </button>
     </div>
   );

@@ -5,8 +5,6 @@ export default async function handle(req, res) {
   const recipeId = req.query.id;
   const { title, spices, ingredients, steps, tags, notes } = req.body;
 
-  //   const session = await getServerSession(req, res, authOptions);
-
   // put method - updating recipe
   if (req.method === "PUT") {
     // disconnecting previous ingredients and tags

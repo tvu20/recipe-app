@@ -2,191 +2,88 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
+import { Icon } from "@iconify/react";
+
+import useMediaQuery from "../utils/useMediaQuery";
+
+import styles from "../styles/Header.module.css";
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const isBreakpoint = useMediaQuery(800);
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
   const { data: session, status } = useSession();
 
-  let left = (
-    <div className="left">
-      <Link href="/">Feed</Link>
-      <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
-
-        a {
-          text-decoration: none;
-          color: var(--geist-foreground);
-          display: inline-block;
-        }
-
-        .left a[data-active="true"] {
-          color: gray;
-        }
-
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style>
-    </div>
-  );
-
   let right = null;
 
   if (status === "loading") {
-    left = (
-      <div className="left">
-        <Link href="/">Feed</Link>
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          .left a[data-active="true"] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
-      </div>
-    );
     right = (
       <div className="right">
         <p>Validating session ...</p>
-        <style jsx>{`
-          .right {
-            margin-left: auto;
-          }
-        `}</style>
       </div>
     );
   }
 
   if (!session) {
     right = (
-      <div className="right">
-        <Link href="/api/auth/signin">Log in</Link>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-        `}</style>
+      <div className={styles.right}>
+        <Link className={styles.menuBtn} href="/api/auth/signin">
+          {isBreakpoint ? <Icon icon="mdi:sign-in-variant" /> : "Log in"}
+        </Link>
       </div>
     );
   }
 
   if (session) {
-    left = (
-      <div className="left">
-        <Link href="/">Feed</Link>
-        <Link href="/mine">My recipes</Link>
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          .left a[data-active="true"] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
-      </div>
-    );
     right = (
-      <div className="right">
-        <p>
-          {session.user.name} ({session.user.email})
-        </p>
-        <Link href="/create">
-          <button>Create</button>
+      <div className={styles.right}>
+        <Link
+          className={`${styles.menuBtn} ${isActive("/mine") && styles.active}`}
+          href="/mine"
+        >
+          {isBreakpoint ? <Icon icon="fa6-solid:list-ul" /> : "My Recipes"}
         </Link>
-        <button onClick={() => signOut()}>
-          <a>Log out</a>
+        <Link
+          className={`${styles.menuBtn} ${
+            isActive("/create") && styles.active
+          }`}
+          href="/create"
+        >
+          {isBreakpoint ? <Icon icon="ic:outline-create" /> : "Create"}
+        </Link>
+        <button className={styles.menuBtn} onClick={() => signOut()}>
+          {isBreakpoint ? <Icon icon="mdi:logout" /> : "Log out"}
         </button>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          p {
-            display: inline-block;
-            font-size: 13px;
-            padding-right: 1rem;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-
-          button {
-            border: none;
-          }
-        `}</style>
       </div>
     );
   }
 
   return (
-    <nav>
-      {left}
+    <div className={styles.navi}>
+      <div className="left">
+        <Link
+          href="/"
+          className={`${styles.homeBtn} ${isActive("/") && styles.active}`}
+        >
+          <Icon icon="ph:bowl-food" />
+        </Link>
+      </div>
       {right}
-      <style jsx>{`
-        nav {
-          display: flex;
-          padding: 2rem;
-          align-items: center;
-        }
-      `}</style>
-    </nav>
+    </div>
+    // <nav className={styles.navi}>
+    //   <div className="left">
+    //     {/* <button className={styles.homeBtn} onClick={() => Router.push("/")}> */}
+    //     <Icon icon="ph:bowl-food" />
+    //     {/* <Icon icon="ph:bowl-food" /> */}
+    //     {/* </button> */}
+    //     {/* <Link href="/" className={styles.homeBtn}>
+    //   <Icon icon="ph:bowl-food" />
+    //   </Link> */}
+    //   </div>
+    //   {right}
+    // </nav>
   );
 };
 

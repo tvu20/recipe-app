@@ -1,0 +1,40 @@
+.btn {
+  background-color: white;
+  font-family: var(--sans-font);
+  font-size: 14px;
+  padding: 5px 12px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  border: none;
+  color: var(--main-color);
+  margin: 5px 10px 5px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  border: 2px solid var(--main-color);
+}
+
+.btn p {
+  margin: 0;
+}
+
+.selected {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.icon {
+  font-size: 20px;
+  margin-right: 3px;
+}
+
+.disabled {
+  cursor: auto;
+}
+
+.tagContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
