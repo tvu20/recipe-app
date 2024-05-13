@@ -10,6 +10,7 @@ export const TAGS = [
   "Rice",
   "Soup",
   "Pasta",
+  "Noodle",
 ];
 
 export const TAG_ICONS = {
@@ -24,4 +25,5 @@ export const TAG_ICONS = {
   Rice: "bx:bowl-rice",
   Soup: "ph:cooking-pot-bold",
   Pasta: "ep:food",
+  Noodle: "icon-park-outline:noodles",
 };
