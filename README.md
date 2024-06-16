@@ -1,5 +1,15 @@
 This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
+# Setup
+
+Install Node and NPM if not already on the system. Then run the following commands:
+
+```
+npm install
+npx prisma generate
+npm run dev
+```
+
 # Updating Prisma Schema
 
 After performing an update, you need to run the following commands:
