@@ -144,7 +144,15 @@ const Edit: React.FC<Props> = ({ recipe, id }) => {
   return (
     <Layout>
       <div className={styles.formContainer}>
-        <form onSubmit={submitData}>
+        <form
+          onSubmit={submitData}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              // Keeps form from submiting on hitting enter
+              // e.preventDefault();
+            }
+          }}
+        >
           <h1>Edit Recipe</h1>
 
           <h3>Name of Dish</h3>

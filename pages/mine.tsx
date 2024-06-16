@@ -29,7 +29,7 @@ const Mine: React.FC = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setRecipes(data);
       })
       .catch((error) => console.error(error));
