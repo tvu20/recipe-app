@@ -15,8 +15,6 @@ type Props = {
 const CreateTag: React.FC<Props> = (props) => {
   const { list, addItem, removeItem } = props;
 
-  console.log(list);
-
   const displayList = () => {
     return TAGS.map((item, i) => {
       return (

@@ -69,7 +69,15 @@ const Create: React.FC = () => {
   return (
     <Layout>
       <div className={styles.formContainer}>
-        <form onSubmit={submitData}>
+        <form
+          onSubmit={submitData}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              // Keeps form from submiting on hitting enter
+              e.preventDefault();
+            }
+          }}
+        >
           <h1>New Recipe</h1>
 
           <h3>Name of Dish</h3>
