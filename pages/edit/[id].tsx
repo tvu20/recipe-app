@@ -144,7 +144,7 @@ const Edit: React.FC<Props> = ({ recipe, id }) => {
   return (
     <Layout>
       <div className={styles.formContainer}>
-        <form
+        {/* <form
           onSubmit={submitData}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -152,78 +152,79 @@ const Edit: React.FC<Props> = ({ recipe, id }) => {
               // e.preventDefault();
             }
           }}
+        > */}
+        <h1>Edit Recipe</h1>
+
+        <h3>Name of Dish</h3>
+        <Input
+          autoFocus
+          value={title}
+          onChange={setTitle}
+          placeholder="Carrot Cake"
+          width="70vw"
+        />
+
+        <div className={styles.spacer}></div>
+
+        <h3>Ingredients</h3>
+        <CreateIngredient
+          list={ingredients}
+          addItem={addIngredient}
+          removeItem={removeIngredient}
+        />
+        <div className={styles.spacer}></div>
+
+        <h3>Seasonings</h3>
+        <CreateList
+          name="Name"
+          list={spices}
+          addItem={addSpice}
+          removeItem={removeSpice}
+        />
+
+        <div className={styles.spacer}></div>
+
+        <h3>Instructions</h3>
+        <CreateList
+          name="Step"
+          list={steps}
+          addItem={addStep}
+          removeItem={removeStep}
+        />
+
+        <div className={styles.spacer}></div>
+
+        <h3 style={{ marginBottom: "10px" }}>Notes</h3>
+        <TextArea
+          onChange={setNotes}
+          placeholder="Additional information"
+          value={notes}
+          small
+          width="70vw"
+        />
+
+        <div className={styles.spacer}></div>
+
+        <h3 style={{ marginBottom: "5px" }}>Tags</h3>
+        <p style={{ margin: "0 0 10px" }}>Select all that apply.</p>
+
+        <CreateTag list={tags} addItem={addTag} removeItem={removeTag} />
+
+        <input
+          disabled={!title}
+          type="submit"
+          value="Save"
+          className={styles.submitButton}
+          onClick={submitData}
+        />
+        <button
+          className={styles.cancel2Button}
+          type="button"
+          onClick={() => Router.push("/recipe/[id]", `/recipe/${recipe.id}`)}
         >
-          <h1>Edit Recipe</h1>
-
-          <h3>Name of Dish</h3>
-          <Input
-            autoFocus
-            value={title}
-            onChange={setTitle}
-            placeholder="Carrot Cake"
-            width="70vw"
-          />
-
-          <div className={styles.spacer}></div>
-
-          <h3>Ingredients</h3>
-          <CreateIngredient
-            list={ingredients}
-            addItem={addIngredient}
-            removeItem={removeIngredient}
-          />
-          <div className={styles.spacer}></div>
-
-          <h3>Seasonings</h3>
-          <CreateList
-            name="Name"
-            list={spices}
-            addItem={addSpice}
-            removeItem={removeSpice}
-          />
-
-          <div className={styles.spacer}></div>
-
-          <h3>Instructions</h3>
-          <CreateList
-            name="Step"
-            list={steps}
-            addItem={addStep}
-            removeItem={removeStep}
-          />
-
-          <div className={styles.spacer}></div>
-
-          <h3 style={{ marginBottom: "10px" }}>Notes</h3>
-          <TextArea
-            onChange={setNotes}
-            placeholder="Additional information"
-            value={notes}
-            small
-            width="70vw"
-          />
-
-          <div className={styles.spacer}></div>
-
-          <h3 style={{ marginBottom: "5px" }}>Tags</h3>
-          <p style={{ margin: "0 0 10px" }}>Select all that apply.</p>
-
-          <CreateTag list={tags} addItem={addTag} removeItem={removeTag} />
-
-          <input
-            disabled={!title}
-            type="submit"
-            value="Save"
-            className={styles.submitButton}
-          />
-          <button
-            className={styles.cancel2Button}
-            type="button"
-            onClick={() => Router.push("/recipe/[id]", `/recipe/${recipe.id}`)}
-          >
-            Cancel
-          </button>
-        </form>
+          Cancel
+        </button>
+        {/* </form> */}
       </div>
     </Layout>
   );
